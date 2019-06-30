@@ -10,16 +10,24 @@ from render import Window, SDL_SetWindowIcon, IMG_Load, Renderer, SpriteFactory,
 
 if __name__ == "__main__":
 
-    window = Window("🐍 贪吃蛇 🐍", size=(960, 640))
+    window = Window("🐍 贪吃蛇 🐍 🐕 🐱 🐻 🐏", size=(960, 640))
 
     renderer = Renderer(window)
     factory = SpriteFactory(renderer)
     bg = factory.create("./data/block.png")
     body = factory.create("./data/body.png")
     head = factory.create("./data/head.png")
+    h1 = factory.create("./data/1.png")
 
     TTF_Init()
-    font = TTF_OpenFont('data/b.ttf'.encode("utf8"), 25)
+    font = TTF_OpenFont('data/b.ttf'.encode("utf8"), 30)
+    text = "贪吃蛇"
+    text_surface = TTF_RenderUTF8_Blended_Wrapped(font, text.replace(" ", "\n").encode("utf8"), SDL_Color(255, 0, 0, 255), 255)
+    text_texture = SDL_CreateTextureFromSurface(renderer.renderer, text_surface)
+    w = ctypes.c_long()
+    h = ctypes.c_long()
+    SDL_QueryTexture(text_texture, None, None, ctypes.byref(w), ctypes.byref(h))
+    SDL_FreeSurface(text_surface)
 
     Mix_OpenAudio(44100, MIX_DEFAULT_FORMAT, 2, 2048)
     Mix_VolumeMusic(20)
@@ -37,7 +45,11 @@ if __name__ == "__main__":
         x = random.randint(1, 20)
         y = random.randint(1, 20)
         body.render(32 * x, 32 * y)
+        h1.render(32 * x, 32 * y)
         head.render(32 * (x - 1), 32 * y)
+        h1.render(32 * x - 32, 32 * y)
+
+    SDL_RenderCopy(renderer.renderer, text_texture, SDL_Rect(w=w, h=h), SDL_Rect(x=500, y=400, w=w, h=h))
 
     SDL_RenderPresent(renderer.renderer)
     running = True
