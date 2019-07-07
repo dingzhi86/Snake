@@ -62,11 +62,14 @@ class Sprite:
         SDL_SetTextureAlphaMod(self.texture, random.randint(170, 200))
         # SDL_SetTextureAlphaMod(self.texture, 50)
 
-    def render(self, x=0, y=0):
+    def render(self, x=0, y=0, flip=False):
         # self.update()
         # SDL_RenderSetViewport(self.renderer.renderer, SDL_Rect(0, 0, 100, 100))
+        a = SDL_FLIP_NONE
+        if flip:
+            a = SDL_FLIP_HORIZONTAL
         SDL_RenderCopyEx(self.renderer.renderer, self.texture, SDL_Rect(0, 0, self.w, self.h),
-                         SDL_Rect(x, y, self.w, self.h), 0, None, SDL_FLIP_NONE)
+                         SDL_Rect(x, y, self.w, self.h), 0, None, a)
         # SDL_RenderSetViewport(self.renderer.renderer, None)
         # SDL_RenderCopyEx(self.renderer.renderer, self.texture, SDL_Rect(0, 0, self.w, self.h),
         #                SDL_Rect(x, y, self.w, self.h), random.randint(1, 90), None, SDL_FLIP_NONE)
