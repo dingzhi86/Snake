@@ -24,8 +24,9 @@ if __name__ == "__main__":
 
     TTF_Init()
     font = TTF_OpenFont('data/b.ttf'.encode("utf8"), 30)
-    text = "贪吃蛇"
-    text_surface = TTF_RenderUTF8_Blended_Wrapped(font, text.replace(" ", "\n").encode("utf8"), SDL_Color(255, 0, 0, 255), 255)
+    text = "🐍 贪吃蛇 🐍 🐕 🐱 🐻 🐏"
+    text_surface = TTF_RenderUTF8_Blended_Wrapped(font, text.replace(" ", "\n").encode("utf8"),
+                                                  SDL_Color(255, 0, 0, 255), 255)
     text_texture = SDL_CreateTextureFromSurface(renderer.renderer, text_surface)
     w = ctypes.c_long()
     h = ctypes.c_long()
@@ -34,12 +35,11 @@ if __name__ == "__main__":
 
     Mix_OpenAudio(44100, MIX_DEFAULT_FORMAT, 2, 2048)
     Mix_VolumeMusic(20)
-    f = Mix_LoadMUS("data/a.mp3".encode("utf-8"))
-    Mix_PlayMusic(f, -1)
+    bgm = Mix_LoadMUS("data/a.mp3".encode("utf-8"))
+    Mix_PlayMusic(bgm, -1)
 
     SDL_SetRenderDrawColor(renderer.renderer, 4, 4, 4, 255)
     SDL_RenderClear(renderer.renderer)
-
 
     running = True
     event = SDL_Event()
@@ -56,16 +56,16 @@ if __name__ == "__main__":
             if event.type == SDL_TEXTEDITING:
                 print(event.edit.text.decode("utf8"))
             if event.type == SDL_KEYUP:
-                a = SDL_GetKeyName(event.key.keysym.sym).decode("utf8")
-                if a == "Up":
+                key = SDL_GetKeyName(event.key.keysym.sym).decode("utf8")
+                if key == "Up":
                     y -= 1
-                elif a == "Right":
+                elif key == "Right":
                     x += 1
                     flip = False
-                elif a == "Left":
+                elif key == "Left":
                     x -= 1
                     flip = True
-                elif a == "Down":
+                elif key == "Down":
                     y += 1
 
         for i in range(window.width // 32):
@@ -79,7 +79,7 @@ if __name__ == "__main__":
         #     h1.render(32 * x1, 32 * y1)
         #     head.render(32 * (x1 - 1), 32 * y1)
         #     h1.render(32 * x1 - 32, 32 * y1)
-        # circle.render(32 * 12, 32 * 5)
+        circle.render(32 * 12, 32 * 5)
         water_drop.render(32 * 12, 32 * 5)
         tri.render(32 * x, 32 * y, flip)
 
