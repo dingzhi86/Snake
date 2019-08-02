@@ -1,7 +1,7 @@
 """Simple example for using sdl2 directly."""
 import os
 
-os.environ["PATH"] += ";lib"
+os.environ["PATH"] += ";dll"
 
 import sys
 import ctypes
