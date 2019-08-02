@@ -10,11 +10,8 @@ sdl2_mixer_url = 'https://www.libsdl.org/projects/SDL_mixer/release/SDL2_mixer-2
 
 urls = [sdl2_url, sdl2_img_url, sdl2_mixer_url, sdl2_ttf_url]
 
-def hook(*args, **kwargs):
-    # print(args)
-    # print(kwargs)
-    pass
-
+def hook(blocknum, bs, size):
+    print(blocknum*bs*100//size, '%')
 
 for url in urls:
     name = url.split('/')[-1]
